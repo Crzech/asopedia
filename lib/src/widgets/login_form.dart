@@ -1,5 +1,7 @@
 import 'package:asopedia/src/models/user.dart';
 import 'package:asopedia/src/themes/theme_manager.dart';
+import 'package:asopedia/src/widgets/password_field.dart';
+import 'package:asopedia/src/widgets/rounded_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -50,56 +52,42 @@ class __LoginFormState extends State<LoginForm> {
                       InputDecoration(labelText: 'Ingresa tu e-mail o usuario'),
                 ),
                 SizedBox(height: 25),
-                TextFormField(
-                  obscureText: !_showPassword,
-                  validator: (value) =>
-                      value.isEmpty ? 'Este campo es requerido' : null,
-                  onSaved: (value) => this.setState(() {
-                    _password = value;
-                  }),
-                  decoration: InputDecoration(
-                      labelText: 'Ingresa tu contraseña',
-                      suffixIcon: GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            if (_showPassword) {
-                              _showPassword = false;
-                              _iconPassword = Icons.visibility;
-                            } else {
-                              _showPassword = true;
-                              _iconPassword = Icons.visibility_off;
-                            }
-                          });
-                        },
-                        child: Icon(_iconPassword),
-                      )),
+                PasswordField(
+                  _iconPassword, 
+                  _showPassword, 
+                  (value) => setState(() { _password = value; }), 
+                  () {
+                    setState(() {
+                      if (_showPassword) {
+                        _showPassword = false;
+                        _iconPassword = Icons.visibility;
+                      } else {
+                        _showPassword = true;
+                        _iconPassword = Icons.visibility_off;
+                      }
+                    });
+                  }, 
+                  (value) => value.isEmpty ? 'Este campo es requerido' : null
                 ),
                 SizedBox(height: 25),
-                SizedBox(
-                  width: double.infinity,
-                  child: RawMaterialButton(
-                    elevation: 2.0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(18.0),
-                    ),
-                    fillColor: ThemeManager.getPrimaryColor(),
-                    textStyle: TextStyle(fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold),
-                    onPressed: () {
-                      if (!_loginFormKey.currentState.validate()) return;
-                      _loginFormKey.currentState.save();
-                      LoginService.authUser(_userName, _password).then((User user) {
-                        _prefs.token = user.token;
-                        Navigator.pushReplacementNamed(context, 'home');
-                      }).catchError((error) {
-                        if (error is LoginException) {
-                          snackMessagesBloc.addNewMessage(error.toString());
-                        } else {
-                          snackMessagesBloc.addNewMessage('Lo sentimos, ocurrió un error desconocido');
-                        }
-                      });
-                    },
-                    child: Text('Iniciar sesión'),
-                  ),
+                RoundedButton(
+                  onPressed: () {
+                    if (!_loginFormKey.currentState.validate()) return;
+                    _loginFormKey.currentState.save();
+                    LoginService.authUser(_userName, _password).then((User user) {
+                      _prefs.token = user.token;
+                      Navigator.pushReplacementNamed(context, 'home');
+                    }).catchError((error) {
+                      if (error is LoginException) {
+                        snackMessagesBloc.addNewMessage(error.toString());
+                      } else {
+                        snackMessagesBloc.addNewMessage('Lo sentimos, ocurrió un error desconocido');
+                      }
+                    });
+                  }, 
+                  text: 'Iniciar sesión', 
+                  color: ThemeManager.getPrimaryColor(), 
+                  textStyle: TextStyle(fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold)
                 )
               ],
             ),

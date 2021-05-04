@@ -15,7 +15,7 @@ class LoginPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               _Logo(screenHeight: screenHeight),
-              SizedBox(height: screenHeight * 0.10),
+              SizedBox(height: screenHeight * 0.05),
               _LoginContainer(screenHeight: screenHeight)
             ],
           ),
@@ -56,7 +56,7 @@ class _LoginContainer extends StatelessWidget {
     return Container(
       child: LoginForm(),
       width: double.infinity,
-      height: screenHeight * 0.50,
+      height: screenHeight * 0.60,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.only(topLeft: Radius.circular(80.0)),
         color: Colors.white
