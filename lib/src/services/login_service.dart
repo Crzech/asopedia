@@ -27,10 +27,10 @@ class LoginService {
     }
   }
   
-  static Future<bool> isUserConfirmed2(userId) async {
+  static Future<bool> isUserConfirmed(userId) async {
     UserPreferences _prefs = UserPreferences();
     final response = await http.get(
-      Uri.https('sgc.asopedia.com', 'wp-json/wp/v2/users/$userId'),
+      Uri.https('sgc.asopedia.com', 'wp-json/wp/v2/users/$userId', { 'context': 'edit' }),
       headers: <String, String> {
         'Content-Type': 'application/json; charsest=UTF-8',
         'Authorization': 'Bearer ${_prefs.token}'
@@ -41,15 +41,34 @@ class LoginService {
       final userInfo = UserInfo.fromJson(jsonDecode(response.body));
       return userInfo.firstName.isNotEmpty && userInfo.lastName.isNotEmpty;
     } else {
-      print('pasando ${response.statusCode}');
-      throw Exception('Lo sentimos, ha ocurrido un error desconocido');
+      throw LoginException('Lo sentimos, ha ocurrido un error desconocido');
     }
   }
   
-  
+  static Future<bool> saveUser(String firstName, String lastName, String password) async {
+    UserPreferences _prefs = UserPreferences();
+    var payload = jsonDecode(ascii.decode(base64.decode(base64.normalize(_prefs.token.split('.')[1]))));
+    final String userId = payload['data']['user']['id'];
 
-  static bool isUserConfirmed(userId) {
-    return false;
+    final Map<String, String> headers = {
+      'Authorization': 'Bearer ${_prefs.token}',
+      'Content-Type': 'application/json',
+    };
+
+    final response = await http.put(
+      Uri.https('sgc.asopedia.com', 'wp-json/wp/v2/users/$userId'),
+      headers: headers,
+      body: jsonEncode(<String, String>{
+        'first_name': firstName,
+        'last_name': lastName,
+        'password': password
+      })
+    );
+
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      throw LoginException('Lo sentimos, ha ocurrido un error desconocido');
+    }
   }
-
 }

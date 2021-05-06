@@ -1,7 +1,3 @@
-import 'package:asopedia/src/models/user.dart';
-import 'package:asopedia/src/themes/theme_manager.dart';
-import 'package:asopedia/src/widgets/password_field.dart';
-import 'package:asopedia/src/widgets/rounded_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -9,6 +5,10 @@ import 'package:asopedia/src/services/login_service.dart';
 import 'package:asopedia/src/bloc/snackmessages/snackmessages_cubit.dart';
 import 'package:asopedia/src/util/user_preferences.dart';
 import 'package:asopedia/src/util/login_exception.dart';
+import 'package:asopedia/src/models/user.dart';
+import 'package:asopedia/src/themes/theme_manager.dart';
+import 'package:asopedia/src/widgets/password_field.dart';
+import 'package:asopedia/src/widgets/rounded_button.dart';
 
 class LoginForm extends StatefulWidget {
   @override
