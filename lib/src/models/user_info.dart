@@ -46,6 +46,7 @@ class UserInfo {
         locale: json["locale"], 
         nickname: json["nickname"],
         slug: json["slug"],
+        avatarUrls: Map<String, String>.from(json['avatar_urls'])
     );
 
     Map<String, dynamic> toJson() => {

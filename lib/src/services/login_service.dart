@@ -26,8 +26,8 @@ class LoginService {
       throw Exception('Unknown error');
     }
   }
-  
-  static Future<bool> isUserConfirmed(userId) async {
+
+  static Future<UserInfo> getUserInfo(userId) async {
     UserPreferences _prefs = UserPreferences();
     final response = await http.get(
       Uri.https('sgc.asopedia.com', 'wp-json/wp/v2/users/$userId', { 'context': 'edit' }),
@@ -38,14 +38,15 @@ class LoginService {
     );
 
     if (response.statusCode == 200) {
-      final userInfo = UserInfo.fromJson(jsonDecode(response.body));
-      return userInfo.firstName.isNotEmpty && userInfo.lastName.isNotEmpty;
+      return UserInfo.fromJson(jsonDecode(response.body));
     } else {
       throw LoginException('Lo sentimos, ha ocurrido un error desconocido');
     }
   }
   
-  static Future<bool> saveUser(String firstName, String lastName, String password) async {
+  static bool isUserConfirmed(UserInfo userInfo) => userInfo.firstName.isNotEmpty && userInfo.lastName.isNotEmpty;
+  
+  static Future<UserInfo> saveUser(String firstName, String lastName, String password) async {
     UserPreferences _prefs = UserPreferences();
     var payload = jsonDecode(ascii.decode(base64.decode(base64.normalize(_prefs.token.split('.')[1]))));
     final String userId = payload['data']['user']['id'];
@@ -66,7 +67,7 @@ class LoginService {
     );
 
     if (response.statusCode == 200) {
-      return true;
+      return UserInfo.fromJson(jsonDecode(response.body));
     } else {
       throw LoginException('Lo sentimos, ha ocurrido un error desconocido');
     }

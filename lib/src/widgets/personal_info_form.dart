@@ -1,4 +1,6 @@
 import 'package:asopedia/src/bloc/home/home_cubit.dart';
+import 'package:asopedia/src/bloc/userinfo/userinfo_cubit.dart';
+import 'package:asopedia/src/models/user_info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -26,7 +28,7 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
 
   @override
   Widget build(BuildContext context) {
-    final snackMessagesBloc = BlocProvider.of<SnackmessagesCubit>(context);
+    final userInfoBloc = BlocProvider.of<UserinfoCubit>(context);
     final homeBloc = BlocProvider.of<HomeCubit>(context);
     return Form(
       key: _formKey,
@@ -91,7 +93,8 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
             onPressed: () {
               if (!_formKey.currentState.validate()) return;
               _formKey.currentState.save();
-              LoginService.saveUser(_firstName, _lastName, _password).then((_) {
+              LoginService.saveUser(_firstName, _lastName, _password).then((UserInfo userInfo) {
+                userInfoBloc.setUser(userInfo);
                 homeBloc.setUserConfirmed();
               }).catchError((err) {
                 final snackBar = SnackBar(content: Text(err.toString()));
