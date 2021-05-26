@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:asopedia/src/widgets/personal_info_form.dart';
+import 'package:asopedia/src/widgets/personal_info/personal_info_form.dart';
 
 class PersonalInfoView extends StatelessWidget {
   @override

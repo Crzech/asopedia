@@ -3,8 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:asopedia/src/bloc/userinfo/userinfo_cubit.dart';
-import 'package:asopedia/src/widgets/glossary_button.dart';
-import 'package:asopedia/src/widgets/menu_button.dart';
+import 'package:asopedia/src/widgets/home/glossary_button.dart';
+import 'package:asopedia/src/widgets/home/menu_button.dart';
+import 'package:asopedia/src/widgets/home/home_drawer.dart';
 
 class HomeView extends StatelessWidget {
   @override
@@ -28,12 +29,13 @@ class HomeView extends StatelessWidget {
           backgroundColor: Color(0xffF8F8F8),
           appBar: AppBar(
             shadowColor: Colors.transparent,
+            iconTheme: IconThemeData(color: Colors.grey),
             foregroundColor: Colors.transparent,
             backgroundColor: Colors.transparent,
-            actions: [CircleAvatar(child: ClipOval(child: appBarCircle)), SizedBox(width: 20)],
-            leading: Icon(Icons.menu, color: Colors.grey)      
+            actions: [CircleAvatar(child: ClipOval(child: appBarCircle)), SizedBox(width: 15)],
           ),
-          body: _Body(firstName: firstName, lastName: lastName, avatarUrl: avatarUrl, screenSize: screenSize),
+          drawer: HomeDrawer(),
+          body: SingleChildScrollView(child: _Body(firstName: firstName, lastName: lastName, avatarUrl: avatarUrl, screenSize: screenSize)),
         );
       }
     );
@@ -56,8 +58,9 @@ class _Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 20.0),
-      margin: EdgeInsets.only(top: 40),
+      padding: EdgeInsets.symmetric(horizontal: 15.0),
+      height: screenSize.height,
+      margin: EdgeInsets.only(top: screenSize.height * 0.01),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

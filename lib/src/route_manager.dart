@@ -1,5 +1,7 @@
 import 'package:asopedia/src/bloc/home/home_cubit.dart';
 import 'package:asopedia/src/bloc/userinfo/userinfo_cubit.dart';
+import 'package:asopedia/src/pages/about_us_page.dart';
+import 'package:asopedia/src/pages/list_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -14,7 +16,9 @@ class RouteManager {
       'home': (BuildContext context) => BlocProvider(
         create: (_) => HomeCubit(),
         child: BlocProvider.value(value: BlocProvider.of<UserinfoCubit>(context), child: HomePage())
-      )
+      ),
+      'list': (BuildContext context) => ListPage(),
+      'about': (BuildContext context) => AboutUsPage()
     };
   }
 

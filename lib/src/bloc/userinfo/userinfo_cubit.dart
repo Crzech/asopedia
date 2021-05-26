@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:asopedia/src/models/user_info.dart';
+import 'package:asopedia/src/models/user/user_info.dart';
 
 
 part 'userinfo_state.dart';

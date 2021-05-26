@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:asopedia/src/util/user_preferences.dart';
-import 'package:asopedia/src/widgets/home_view.dart';
-import 'package:asopedia/src/widgets/personal_info_view.dart';
+import 'package:asopedia/src/widgets/home/home_view.dart';
+import 'package:asopedia/src/widgets/personal_info/personal_info_view.dart';
 import 'package:asopedia/src/bloc/home/home_cubit.dart';
-import 'package:asopedia/src/services/login_service.dart';
+import 'package:asopedia/src/services/login/login_service.dart';
 
 class HomePage extends StatefulWidget {
   @override
