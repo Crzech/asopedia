@@ -1,7 +1,7 @@
 import 'package:meta/meta.dart';
 import 'dart:convert';
 
-class MainCategory {
+class MainCategory  {
   MainCategory({
     @required this.id,
     @required this.title,

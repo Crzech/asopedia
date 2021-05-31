@@ -1,10 +1,10 @@
 import 'dart:convert';
-import 'package:asopedia/src/models/user/user_info.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:asopedia/src/models/user/user.dart';
 import 'package:asopedia/src/util/login_exception.dart';
 import 'package:asopedia/src/util/user_preferences.dart';
+import 'package:asopedia/src/models/user/user_info.dart';
 
 class LoginService {
   static Future<User> authUser(username, password) async {

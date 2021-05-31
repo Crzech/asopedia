@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-
+import 'package:asopedia/src/pages/list_page.dart';
+import 'package:asopedia/src/services/categories/main_categories_service.dart';
+import 'package:asopedia/src/services/posts/posts_service.dart';
 class GlossaryButton extends StatelessWidget {
   const GlossaryButton({
     @required this.screenSize,
@@ -11,7 +13,14 @@ class GlossaryButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, 'list');
+        Navigator.pushNamed(
+          context, 
+          'list', 
+          arguments: ListPageArguments(
+            categoriesFuture: getMainCategories(),
+            postFuture: PostService.getPostsByCategoryId,
+          )
+        );
       },
       child: Container(
         child: Row(
