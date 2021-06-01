@@ -20,7 +20,7 @@ class ListPage extends StatefulWidget {
 }
 
 class _ListPageState extends State<ListPage> {
-  static const _pageSize = 2;
+  static const _pageSize = 10;
   Future<List<DropdownItem>> futureCategories;
   Future<List<AbstractPost>> Function(String, int, int) futurePosts;
   int _currentPage = 0;
@@ -68,6 +68,7 @@ class _ListPageState extends State<ListPage> {
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
     return Scaffold(
+        backgroundColor: Color(0xFFEEEEEE),
         body: Stack(
         children: [
           PostScrollView(scrollController: _scrollController, screenSize: screenSize, futureCategories: futureCategories, posts: posts),

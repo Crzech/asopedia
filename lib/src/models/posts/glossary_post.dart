@@ -2,7 +2,7 @@ import 'package:asopedia/src/models/posts/abstract_post.dart';
 import 'package:meta/meta.dart';
 import 'dart:convert';
 
-class GlossaryPost extends AbstractPost {
+class GlossaryPost implements AbstractPost {
   GlossaryPost({
     @required this.id,
     @required this.date,

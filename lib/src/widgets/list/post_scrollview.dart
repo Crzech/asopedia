@@ -1,3 +1,5 @@
+import 'package:asopedia/src/models/posts/glossary_post.dart';
+import 'package:asopedia/src/widgets/list/post_list_child.dart';
 import 'package:asopedia/src/widgets/list/posts_appbar.dart';
 import 'package:asopedia/src/widgets/shared/future_dropdown.dart';
 import 'package:flutter/material.dart';
@@ -50,12 +52,10 @@ class PostScrollView extends StatelessWidget {
         SliverList(
             delegate:
                 SliverChildBuilderDelegate((BuildContext context, int index) {
-          return Container(
-            height: 400.0,
-            decoration: BoxDecoration(
-              border: Border(bottom: BorderSide(color: Color(0xff959595))),
-              color: Colors.white,
-            ),
+          return PostListChild( 
+            postTitle: posts[index].title.rendered, 
+            postAuthor: 'Dr. Christian Pernillo', 
+            postDate: posts[index].date
           );
         }, childCount: posts.length))
       ],
