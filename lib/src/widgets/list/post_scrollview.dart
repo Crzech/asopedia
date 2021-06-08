@@ -55,7 +55,8 @@ class PostScrollView extends StatelessWidget {
           return PostListChild( 
             postTitle: posts[index].title.rendered, 
             postAuthor: 'Dr. Christian Pernillo', 
-            postDate: posts[index].date
+            postDate: posts[index].date,
+            postId: posts[index].id
           );
         }, childCount: posts.length))
       ],

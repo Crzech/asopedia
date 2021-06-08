@@ -1,7 +1,9 @@
+import 'package:asopedia/src/bloc/list/list_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:asopedia/src/pages/list_page.dart';
 import 'package:asopedia/src/services/categories/main_categories_service.dart';
 import 'package:asopedia/src/services/posts/posts_service.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 class GlossaryButton extends StatelessWidget {
   const GlossaryButton({
     @required this.screenSize,
@@ -11,8 +13,10 @@ class GlossaryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final listBloc = BlocProvider.of<ListCubit>(context);
     return GestureDetector(
       onTap: () {
+        listBloc.setGlossaryAsGetter();
         Navigator.pushNamed(
           context, 
           'list', 

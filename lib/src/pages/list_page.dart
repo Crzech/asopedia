@@ -1,10 +1,11 @@
+import 'package:asopedia/src/bloc/list/list_cubit.dart';
 import 'package:asopedia/src/widgets/list/post_loader.dart';
 import 'package:flutter/material.dart';
 
 import 'package:asopedia/src/widgets/list/post_scrollview.dart';
 import 'package:asopedia/src/models/posts/abstract_post.dart';
 import 'package:asopedia/src/models/shared/dropdown_item.dart';
-
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ListPageArguments {
   final Future<List<DropdownItem>> categoriesFuture;
@@ -53,10 +54,9 @@ class _ListPageState extends State<ListPage> {
           _currentPage++;
           posts.addAll(_newItems);
         });
-        _scrollController.animateTo(
-          _scrollController.position.pixels + 100, 
-          curve: Curves.fastLinearToSlowEaseIn, duration: Duration( milliseconds: 250 )
-        );
+        _scrollController.animateTo(_scrollController.position.pixels + 100,
+            curve: Curves.fastLinearToSlowEaseIn,
+            duration: Duration(milliseconds: 250));
       }
       setState(() => _isLoading = false);
     } catch (err) {
@@ -70,12 +70,15 @@ class _ListPageState extends State<ListPage> {
     return Scaffold(
         backgroundColor: Color(0xFFEEEEEE),
         body: Stack(
-        children: [
-          PostScrollView(scrollController: _scrollController, screenSize: screenSize, futureCategories: futureCategories, posts: posts),
-          PostLoader(posts: posts, isLoading: _isLoading)
-        ],
-      )
-    );
+          children: [
+            PostScrollView(
+                scrollController: _scrollController,
+                screenSize: screenSize,
+                futureCategories: futureCategories,
+                posts: posts),
+            PostLoader(posts: posts, isLoading: _isLoading)
+          ],
+        ));
   }
 
   @override

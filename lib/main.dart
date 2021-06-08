@@ -1,4 +1,5 @@
 
+import 'package:asopedia/src/bloc/list/list_cubit.dart';
 import 'package:asopedia/src/bloc/userinfo/userinfo_cubit.dart';
 import 'package:asopedia/src/themes/theme_manager.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +21,8 @@ Future<void> main() async {
     MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => SnackmessagesCubit()),
-        BlocProvider(create: (_) => UserinfoCubit())
+        BlocProvider(create: (_) => UserinfoCubit()),
+        BlocProvider(create: (_) => ListCubit())
       ], 
       child: MyApp()
     )

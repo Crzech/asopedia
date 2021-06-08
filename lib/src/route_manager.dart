@@ -1,7 +1,9 @@
 import 'package:asopedia/src/bloc/home/home_cubit.dart';
+import 'package:asopedia/src/bloc/list/list_cubit.dart';
 import 'package:asopedia/src/bloc/userinfo/userinfo_cubit.dart';
 import 'package:asopedia/src/pages/about_us_page.dart';
 import 'package:asopedia/src/pages/list_page.dart';
+import 'package:asopedia/src/pages/post_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -15,10 +17,20 @@ class RouteManager {
       'login': (BuildContext context) => LoginPage(),
       'home': (BuildContext context) => BlocProvider(
         create: (_) => HomeCubit(),
-        child: BlocProvider.value(value: BlocProvider.of<UserinfoCubit>(context), child: HomePage())
+        child: MultiBlocProvider(
+          providers: [
+            BlocProvider.value(value: BlocProvider.of<UserinfoCubit>(context)),
+            BlocProvider.value(value: BlocProvider.of<ListCubit>(context))
+          ], 
+          child: HomePage()
+        )
       ),
       'list': (BuildContext context) => ListPage(),
-      'about': (BuildContext context) => AboutUsPage()
+      'about': (BuildContext context) => AboutUsPage(),
+      'post': (BuildContext context) => BlocProvider.value(
+        value: BlocProvider.of<ListCubit>(context),
+        child: PostPage(),
+      )
     };
   }
 
