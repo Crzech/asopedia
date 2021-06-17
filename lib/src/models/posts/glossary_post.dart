@@ -1,4 +1,5 @@
 import 'package:asopedia/src/models/posts/abstract_post.dart';
+import 'package:asopedia/src/models/posts/content.dart';
 import 'package:meta/meta.dart';
 import 'dart:convert';
 
@@ -65,31 +66,6 @@ class GlossaryPost implements AbstractPost {
         "content": content.toJson(),
       };
 }
-
-class Content {
-  Content({
-    @required this.rendered,
-    @required this.protected,
-  });
-
-  String rendered;
-  bool protected;
-
-  factory Content.fromRawJson(String str) => Content.fromJson(json.decode(str));
-
-  String toRawJson() => json.encode(toJson());
-
-  factory Content.fromJson(Map<String, dynamic> json) => Content(
-        rendered: json["rendered"],
-        protected: json["protected"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "rendered": rendered,
-        "protected": protected,
-      };
-}
-
 class RenderedField {
   RenderedField({
     @required this.rendered,

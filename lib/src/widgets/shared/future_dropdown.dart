@@ -5,11 +5,15 @@ import 'package:asopedia/src/models/shared/dropdown_item.dart';
 class FutureDropdown extends StatelessWidget {
   const FutureDropdown({
     @required this.future,
-    @required this.onChanged
+    @required this.onChanged, 
+    @required this.selectedCat, 
+    @required this.defaultCat
   });
 
   final Future future;
   final Function onChanged;
+  final String selectedCat;
+  final String defaultCat;
 
   @override
   Widget build(BuildContext context) {
@@ -35,15 +39,27 @@ class FutureDropdown extends StatelessWidget {
           } else if (snapshot.hasError) {
             hint = 'Ha ocurrido un error';
           }
-          return DropdownButton<String>(
-            underline: Text(''),
-            icon: Icon(Icons.arrow_drop_down, color: Colors.white),
-            onChanged: tempOnChanged,
-            hint: Text(hint, style: TextStyle(color: Colors.white)),
-            items: tempData.map((e) => DropdownMenuItem<String>(
+          final items = tempData.map((e) => DropdownMenuItem<String>(
               value: e.id,
-              child: Text(e.title),
-            )).toList(),
+              child: Container(color: Colors.black, child: Text(e.title)),
+            )).toList();
+          items.add(DropdownMenuItem<String>(
+              value: defaultCat,
+              child: Text('Todos'),
+          ));
+          return Theme(
+            data: Theme.of(context).copyWith(
+              canvasColor: Color(0xff061a27)
+            ),
+            child: DropdownButton<String>(
+              underline: Text(''),
+              value: selectedCat,
+              icon: Icon(Icons.arrow_drop_down, color: Colors.white),
+              onChanged: tempOnChanged,
+              style: TextStyle(color: Colors.white),
+              hint: Text(hint, style: TextStyle(color: Colors.white)),
+              items: items
+            ),
           );
         },
       ),

@@ -25,7 +25,10 @@ class RouteManager {
           child: HomePage()
         )
       ),
-      'list': (BuildContext context) => ListPage(),
+      'list': (BuildContext context) => BlocProvider.value(
+        value: BlocProvider.of<ListCubit>(context),
+        child: ListPage(),
+      ),
       'about': (BuildContext context) => AboutUsPage(),
       'post': (BuildContext context) => BlocProvider.value(
         value: BlocProvider.of<ListCubit>(context),

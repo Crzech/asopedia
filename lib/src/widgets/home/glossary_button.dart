@@ -23,6 +23,7 @@ class GlossaryButton extends StatelessWidget {
           arguments: ListPageArguments(
             categoriesFuture: getMainCategories(),
             postFuture: PostService.getPostsByCategoryId,
+            defaultCat: '2'
           )
         );
       },

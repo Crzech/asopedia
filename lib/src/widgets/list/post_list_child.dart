@@ -37,7 +37,7 @@ class _PostListChildState extends State<PostListChild> {
       onTap: () => Navigator.pushNamed(context, 'post', arguments: PostPageArguments(postId: widget.postId)),
       child: Container(
         width: 100,
-        height: 150,
+        height: 125,
         decoration: BoxDecoration(
           color: Colors.white,
           shape: BoxShape.rectangle,
@@ -60,9 +60,9 @@ class _PostListChildState extends State<PostListChild> {
                     width: textWidth,
                     child: Text(
                       widget.postTitle,
-                      overflow: TextOverflow.visible,
+                      overflow: TextOverflow.ellipsis,
                       style: TextStyle(
-                        fontSize: 30,
+                        fontSize: 25,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
