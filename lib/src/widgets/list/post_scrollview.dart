@@ -70,7 +70,6 @@ class PostScrollView extends StatelessWidget {
                 (BuildContext context, int index) {
                   return PostListChild(
                     postTitle: _blocPosts[index].title.rendered,
-                    postAuthor: 'Dr. Christian Pernillo',
                     postDate: _blocPosts[index].date,
                     postId: _blocPosts[index].id
                   );

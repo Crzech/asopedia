@@ -96,12 +96,6 @@ class _ListPageState extends State<ListPage> {
                 futureCategories: futureCategories,
                 posts: posts,
                 selectedCat: selectedCat,
-                // onChangeDropdown: (String value) => this.setState(() {
-                //   selectedCat = value;
-                //   _currentPage = 0;
-                //   posts = [];
-                  
-                // }),
                 onChangeDropdown: (String value) {
                   _listBloc.changeGlossaryLoading(value, true, []);
                   _fetchPage(0, value).then((newPosts) => _listBloc.changeGlossaryLoading(value, false, newPosts));

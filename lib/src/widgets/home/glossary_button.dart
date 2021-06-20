@@ -36,18 +36,23 @@ class GlossaryButton extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Glosario',
+                Text('Actualidad',
                     style: TextStyle(color: Colors.white, fontSize: 20.0)),
-                Text('Contenido General',
-                    style: TextStyle(color: Colors.grey, fontSize: 15.0))
+                Container(
+                  width: screenSize.width * 0.60,
+                  child:Text(
+                    'Tendencias, Anafilaxia, Infectología, COVID19',
+                    style: TextStyle(color: Colors.grey, fontSize: 15.0)
+                  )
+                )
               ],
             ),
             Expanded(child: SizedBox()),
             Icon(Icons.menu_book, size: 60, color: Colors.white70)
           ],
         ),
-        height: screenSize.width * 0.30,
-        width: double.infinity,
+        height: screenSize.height * 0.20,
+        width: screenSize.width * 0.90,
         decoration: BoxDecoration(
             color: Color(0xff155682),
             borderRadius: BorderRadius.all(Radius.circular(25.0))),

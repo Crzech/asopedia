@@ -97,15 +97,29 @@ class _Body extends StatelessWidget {
                     subtitle: 'de vacunación',
                     icon: Icons.border_all,
                     screenSize: screenSize,
-                    onTap: () => print('Hello'),
+                    onTap: () => Navigator.of(context).pushNamed('vaccine_schedule'),
                   ),
                   MenuButton(
-                    title: 'Referencias',
-                    subtitle: 'Referencias Rápidas',
+                    title: 'Eventos',
+                    subtitle: 'Eventos institucionales',
                     icon: FontAwesomeIcons.swatchbook,
                     screenSize: screenSize,
                     onTap: () => print('Hello'),
-                  )
+                  ),
+                  MenuButton(
+                    title: 'Recursos',
+                    subtitle: 'Estudios médicos',
+                    icon: FontAwesomeIcons.swatchbook,
+                    screenSize: screenSize,
+                    onTap: () => print('Hello'),
+                  ),
+                  MenuButton(
+                    title: 'Eventos',
+                    subtitle: 'Eventos institucionales',
+                    icon: FontAwesomeIcons.swatchbook,
+                    screenSize: screenSize,
+                    onTap: () => print('Hello'),
+                  ),
                 ]),
           )
         ],

@@ -41,7 +41,7 @@ class FutureDropdown extends StatelessWidget {
           }
           final items = tempData.map((e) => DropdownMenuItem<String>(
               value: e.id,
-              child: Container(color: Colors.black, child: Text(e.title)),
+              child: Container(child: Text(e.title)),
             )).toList();
           items.add(DropdownMenuItem<String>(
               value: defaultCat,

@@ -9,14 +9,12 @@ class PostListChild extends StatefulWidget {
 
   const PostListChild({ 
     @required this.postTitle, 
-    @required this.postAuthor, 
     @required this.postDate, 
     @required this.postId
   });
 
   final int postId;
   final String postTitle;
-  final String postAuthor;
   final DateTime postDate;
 
   @override
@@ -55,6 +53,7 @@ class _PostListChildState extends State<PostListChild> {
               child: Column(
                 mainAxisSize: MainAxisSize.max,
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
                     width: textWidth,
@@ -65,13 +64,6 @@ class _PostListChildState extends State<PostListChild> {
                         fontSize: 25,
                         fontWeight: FontWeight.bold,
                       ),
-                    ),
-                  ),
-                  Text(
-                    widget.postAuthor,
-                    style: TextStyle(
-                      color: Color(0xFF9E9E9E),
-                      fontSize: 20,
                     ),
                   ),
                   Text(

@@ -6,6 +6,7 @@ abstract class ListState {
   final List<AbstractPost> posts = [];
   final String selectedCat = null;
   final String defaultCat = null;
+  final String title = null;
 }
 
 class ListInitial implements ListState {
@@ -13,6 +14,7 @@ class ListInitial implements ListState {
    final posts = [];
    final String selectedCat = null;
    final String defaultCat = null;
+   final String title = null;
 }
 
 class ListGlossary implements ListState {
@@ -29,4 +31,5 @@ class ListGlossary implements ListState {
   final selectedCat;
   final Future<AbstractPost> Function(int) postGetter = (int postId) => PostService.getPostsById(postId);
   final List<AbstractPost> posts;
+  final String title = 'Actualidad';
 }
