@@ -8,7 +8,7 @@ import 'package:asopedia/src/util/login_exception.dart';
 import 'package:asopedia/src/models/user/user.dart';
 import 'package:asopedia/src/themes/theme_manager.dart';
 import 'package:asopedia/src/widgets/login/password_field.dart';
-import 'package:asopedia/src/widgets/shared/rounded_button.dart';
+import 'package:rounded_loading_button/rounded_loading_button.dart';
 
 class LoginForm extends StatefulWidget {
   @override
@@ -17,6 +17,7 @@ class LoginForm extends StatefulWidget {
 
 class __LoginFormState extends State<LoginForm> {
   final _loginFormKey = new GlobalKey<FormState>();
+  final _submitBtnController = RoundedLoadingButtonController();
   final _prefs = UserPreferences();
 
   String _userName = '';
@@ -70,24 +71,31 @@ class __LoginFormState extends State<LoginForm> {
                   (value) => value.isEmpty ? 'Este campo es requerido' : null
                 ),
                 SizedBox(height: 25),
-                RoundedButton(
+                RoundedLoadingButton(
+                  controller: _submitBtnController,
+                  color: ThemeManager.getAccentColor(),
+                  errorColor: Color(0xffff5252),
                   onPressed: () {
-                    if (!_loginFormKey.currentState.validate()) return;
+                    if (!_loginFormKey.currentState.validate()) {
+                      _submitBtnController.reset();
+                      return;
+                    } 
                     _loginFormKey.currentState.save();
                     LoginService.authUser(_userName, _password).then((User user) {
                       _prefs.token = user.token;
-                      Navigator.pushReplacementNamed(context, 'home');
+                      _submitBtnController.success();
+                      Future.delayed(Duration(seconds: 2), () => Navigator.pushReplacementNamed(context, 'home'));
                     }).catchError((error) {
+                      _submitBtnController.error();
                       if (error is LoginException) {
                         snackMessagesBloc.addNewMessage(error.toString());
                       } else {
                         snackMessagesBloc.addNewMessage('Lo sentimos, ocurrió un error desconocido');
                       }
+                      Future.delayed(Duration(seconds: 2), () => _submitBtnController.reset());
                     });
-                  }, 
-                  text: 'Iniciar sesión', 
-                  color: ThemeManager.getPrimaryColor(), 
-                  textStyle: TextStyle(fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold)
+                  },
+                  child: Text('Iniciar sesión', style: TextStyle(color: Colors.white))
                 )
               ],
             ),

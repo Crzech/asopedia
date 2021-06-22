@@ -1,3 +1,4 @@
+import 'package:asopedia/src/util/user_preferences.dart';
 import 'package:flutter/material.dart';
 
 class HomeDrawer extends StatelessWidget {
@@ -34,9 +35,14 @@ class HomeDrawer extends StatelessWidget {
             onTap: () => Navigator.of(context).pushNamed('about'),
           ),
           ListTile(
-              title: Text('Configuraciones'),
-              leading: Icon(Icons.settings),
-              onTap: () => {})
+              title: Text('Cerrar Sesión'),
+              leading: Icon(Icons.logout),
+              onTap: ()  {
+                UserPreferences _prefs = new UserPreferences();
+                _prefs.token = '';
+                Navigator.pushReplacementNamed(context, 'login');
+              }
+          )
         ],
       ),
     );

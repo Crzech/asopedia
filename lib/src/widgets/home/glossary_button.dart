@@ -16,16 +16,16 @@ class GlossaryButton extends StatelessWidget {
     final listBloc = BlocProvider.of<ListCubit>(context);
     return GestureDetector(
       onTap: () {
-        listBloc.setGlossaryAsGetter();
-        Navigator.pushNamed(
-          context, 
-          'list', 
-          arguments: ListPageArguments(
-            categoriesFuture: getMainCategories(),
-            postFuture: PostService.getPostsByCategoryId,
-            defaultCat: '2'
-          )
-        );
+        // listBloc.setGlossaryAsGetter();
+        // Navigator.pushNamed(
+        //   context, 
+        //   'list', 
+        //   arguments: ListPageArguments(
+        //     categoriesFuture: getMainCategories(),
+        //     postFuture: PostService.getPostsByCategoryId,
+        //     defaultCat: '2'
+        //   )
+        // );
       },
       child: Container(
         child: Row(

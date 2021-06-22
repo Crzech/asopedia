@@ -69,7 +69,7 @@ class LoginService {
     if (response.statusCode == 200) {
       return UserInfo.fromJson(jsonDecode(response.body));
     } else {
-      throw LoginException('Lo sentimos, ha ocurrido un error desconocido');
+      throw LoginException('Los servidores no estan funcionando, inténtelo de nuevo');
     }
   }
 }

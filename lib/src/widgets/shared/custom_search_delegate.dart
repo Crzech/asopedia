@@ -1,3 +1,4 @@
+import 'package:asopedia/src/models/posts/glossary_post.dart';
 import 'package:asopedia/src/models/search/search_result.dart';
 import 'package:asopedia/src/pages/post_page.dart';
 import 'package:asopedia/src/services/search/search_service.dart';
@@ -5,7 +6,7 @@ import 'package:flutter/material.dart';
 
 class CustomSearchDelegate extends SearchDelegate{
 
-  CustomSearchDelegate({ this.categoryId }) : super();
+  CustomSearchDelegate({ @required this.categoryId }) : super();
   final String categoryId; 
 
   @override
@@ -37,8 +38,8 @@ class CustomSearchDelegate extends SearchDelegate{
   Widget buildSuggestions(BuildContext context) {
     if (query.isEmpty) return Container();
     return FutureBuilder(
-      future: SearchService.getSearchResults(query),
-      builder: (BuildContext context, AsyncSnapshot<List<SearchResult>> snapshot) {
+      future: SearchService.getSearchResults(query, categoryId),
+      builder: (BuildContext context, AsyncSnapshot<List<GlossaryPost>> snapshot) {
         if ( snapshot.hasData ) {
           final _results = snapshot.data;
 
@@ -46,10 +47,10 @@ class CustomSearchDelegate extends SearchDelegate{
             itemBuilder: (BuildContext context, int index) {
               return ListTile(
                 leading: Icon(Icons.article),
-                title: Text(_results[index].title),
+                title: Text(_results[index].title.rendered),
                 onTap: () {
                   close(context, null);
-                  Navigator.of(context).pushNamed('post', arguments: PostPageArguments(postId: _results[index].id));
+                  Navigator.of(context).pushNamed('post', arguments: PostPageArguments(post: _results[index]));
                 },
               );
             },

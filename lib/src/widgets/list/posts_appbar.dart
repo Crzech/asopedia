@@ -10,26 +10,27 @@ class PostsAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        GestureDetector(
-          child: Icon(Icons.arrow_back_ios, color: Colors.white),
-          onTap: () => Navigator.of(context).pop(),
-        ),
-        BlocBuilder<ListCubit, ListState>(
-          builder: (context, state) {
-            print(state);
-            return Text(state.title,
-              style: TextStyle(color: Colors.white, fontSize: 20.0)
-            );
-          },
-        ),
-        GestureDetector(
-          child: Icon(Icons.search, color: Colors.white), 
-          onTap: () => showSearch(context: context, delegate: CustomSearchDelegate())
-        )
-      ],
+    return BlocBuilder<ListCubit, ListState>(
+      builder: (context, state) {
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            GestureDetector(
+              child: Icon(Icons.arrow_back_ios, color: Colors.white),
+              onTap: () => Navigator.of(context).pop(),
+            ),
+            Text(state.title,
+                style: TextStyle(color: Colors.white, fontSize: 20.0)),
+            GestureDetector(
+              child: Icon(Icons.search, color: Colors.white),
+              onTap: () => showSearch(
+                context: context, 
+                delegate: CustomSearchDelegate(categoryId: state.selectedCat)
+              )
+            )
+          ],
+        );
+      },
     );
   }
 }

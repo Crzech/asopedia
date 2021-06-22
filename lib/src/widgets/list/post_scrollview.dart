@@ -1,42 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:asopedia/src/models/posts/abstract_post.dart';
 import 'package:asopedia/src/models/shared/dropdown_item.dart';
 import 'package:asopedia/src/widgets/shared/sliver_header_delegate.dart';
 import 'package:asopedia/src/widgets/list/post_list_child.dart';
 import 'package:asopedia/src/widgets/list/posts_appbar.dart';
-import 'package:asopedia/src/widgets/shared/future_dropdown.dart';
 import 'package:asopedia/src/bloc/list/list_cubit.dart';
+import 'package:asopedia/src/widgets/list/category_dropdown.dart';
 
 class PostScrollView extends StatelessWidget {
-  const PostScrollView(
-      {Key key,
+
+  const PostScrollView({
       @required ScrollController scrollController,
       @required this.screenSize,
-      @required this.futureCategories,
-      @required this.posts,
-      this.onChangeDropdown,
-      @required this.selectedCat,
-      @required this.defaultCat})
-      : _scrollController = scrollController,
-        super(key: key);
+      @required this.categories,
+      @required this.showError,
+      @required this.onChangedDropdown,
+  }) : _scrollController = scrollController;
 
   final ScrollController _scrollController;
   final Size screenSize;
-  final Future<List<DropdownItem>> futureCategories;
-  final List<AbstractPost> posts;
-  final Function(String value) onChangeDropdown;
-  final String selectedCat;
-  final String defaultCat;
+  final List<DropdownItem> categories;
+  final bool showError;
+  final Function onChangedDropdown;
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ListCubit, ListState>(
       builder: (context, state) {
-        print('Default Cat: ${state.defaultCat}');
-        print('Selected Cat: ${state.selectedCat}');
-        print('========================');
         final _blocPosts = state.posts;
         return CustomScrollView(
           controller: _scrollController,
@@ -54,12 +45,7 @@ class PostScrollView extends StatelessWidget {
                       children: [
                         PostsAppBar(),
                         SizedBox(height: 25.0),
-                        FutureDropdown(
-                          future: futureCategories,
-                          onChanged: onChangeDropdown,
-                          selectedCat: state.selectedCat,
-                          defaultCat: state.defaultCat
-                        ),
+                        categories.length > 1 ? CategoryDropdown(categories: categories, onChanged: onChangedDropdown) : Container(),
                         SizedBox(height: 20.0),
                       ],
                     ),
@@ -68,11 +54,7 @@ class PostScrollView extends StatelessWidget {
             SliverList(
               delegate: SliverChildBuilderDelegate(
                 (BuildContext context, int index) {
-                  return PostListChild(
-                    postTitle: _blocPosts[index].title.rendered,
-                    postDate: _blocPosts[index].date,
-                    postId: _blocPosts[index].id
-                  );
+                  return PostListChild(post: _blocPosts[index]);
                 }, 
                 childCount: _blocPosts.length
               )

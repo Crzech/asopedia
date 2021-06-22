@@ -31,7 +31,6 @@ class _PersonalInfoContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: screenHeight * 0.85,
       padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 25),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.only(topLeft: Radius.circular(80.0)),

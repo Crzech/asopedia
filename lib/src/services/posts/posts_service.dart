@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'package:asopedia/src/models/posts/abstract_post.dart';
+import 'package:asopedia/src/models/posts/favorites_result.dart';
 import 'package:asopedia/src/util/login_exception.dart';
 import 'package:asopedia/src/util/user_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -15,7 +17,6 @@ class PostService {
       'per_page': pageSize.toString(),
       'page': pageKey.toString()
     };
-    print(params);
     final response = await http.get(
       Uri.https('sgc.asopedia.com', 'wp-json/wp/v2/posts', params),
       headers: <String, String>{
@@ -29,9 +30,9 @@ class PostService {
           .map((e) => GlossaryPost.fromJson(Map<String, dynamic>.from(e)))
           .toList();
     } else if (response.statusCode == 400) {
+      print(params);
       return [];
     } else {
-      print(response.body);
       throw LoginException(
           'Los servidores no estan funcionando, inténtelo de nuevo');
     }
@@ -56,6 +57,52 @@ class PostService {
     } catch (ex) {
       throw LoginException(
             'Los servidores no estan funcionando, inténtelo de nuevo');
+    }
+  }
+
+  static Future<bool> addToFavorites(AbstractPost post) async {
+    UserPreferences _prefs = UserPreferences();
+    final response = await http.post(
+      Uri.https('sgc.asopedia.com', 'wp-json/user/favorites'),
+      headers: <String, String>{
+        'Authorization': 'Bearer ${_prefs.token}',
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode({
+        'id': post.id,
+        'title': post.title,
+        'created': post.date.toString()
+      })
+    );
+
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      throw LoginException('Los servidores no estan funcionando, inténtelo de nuevo');
+    }
+  }
+
+  static Future<List<FavoritesResult>> getFavorites() async {
+    UserPreferences _prefs = UserPreferences();
+    final response = await http.get(
+      Uri.https('sgc.asopedia.com', 'wp-json/user/favorites'),
+      headers: <String, String>{
+        'Authorization': 'Bearer ${_prefs.token}',
+        'Content-Type': 'application/json; charset=UTF-8',
+      }
+    );
+
+    if (response.statusCode == 200) {
+      // final data =  (jsonDecode(response.body) as List)
+      //   .map((e) => FavoritesResult.fromJson(e))
+      //   .toList();
+      
+      return [
+        FavoritesResult(id: 1894, title: RenderedField(rendered: 'Reacciones alérgicas demo'), created: DateTime.parse('2021-06-20 23:25:05.000')),
+        FavoritesResult(id: 1896, title: RenderedField(rendered: 'Picadura de abeja'), created: DateTime.parse('2021-06-20 23:25:05.000'))
+      ];
+    } else {
+      throw LoginException('Los servidores no estan funcionando, inténtelo de nuevo');
     }
   }
 }

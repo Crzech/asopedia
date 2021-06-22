@@ -1,3 +1,5 @@
+import 'package:asopedia/src/pages/favorites_page.dart';
+import 'package:asopedia/src/pages/list_page2.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -28,14 +30,19 @@ class RouteManager {
       ),
       'list': (BuildContext context) => BlocProvider.value(
         value: BlocProvider.of<ListCubit>(context),
-        child: ListPage(),
+        // child: ListPage(),
+      ),
+      'list2': (BuildContext context) => BlocProvider.value(
+        value: BlocProvider.of<ListCubit>(context),
+        child: ListPage2(),
       ),
       'about': (BuildContext context) => AboutUsPage(),
       'post': (BuildContext context) => BlocProvider.value(
         value: BlocProvider.of<ListCubit>(context),
         child: PostPage(),
       ),
-      'vaccine_schedule': (BuildContext context) => VaccineSchedulePage()
+      'vaccine_schedule': (BuildContext context) => VaccineSchedulePage(),
+      'favorites': (BuildContext context) => FavoritesPage()
     };
   }
 

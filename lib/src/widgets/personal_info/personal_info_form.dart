@@ -8,6 +8,7 @@ import 'package:asopedia/src/services/login/login_service.dart';
 import 'package:asopedia/src/widgets/shared/rounded_button.dart';
 import 'package:asopedia/src/bloc/home/home_cubit.dart';
 import 'package:asopedia/src/bloc/userinfo/userinfo_cubit.dart';
+import 'package:rounded_loading_button/rounded_loading_button.dart';
 
 class PersonalInfoForm extends StatefulWidget {
   @override
@@ -15,6 +16,7 @@ class PersonalInfoForm extends StatefulWidget {
 }
 
 class _PersonalInfoFormState extends State<PersonalInfoForm> {
+  final _submitBtnController = RoundedLoadingButtonController();
   IconData _iconPassword1 = Icons.visibility;
   IconData _iconPassword2 = Icons.visibility;
   bool _showPassword1 = false;
@@ -87,22 +89,45 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
             }
           ),
           SizedBox(height: 75),
-          RoundedButton(
-            color: ThemeManager.getPrimaryColor(),
+          RoundedLoadingButton(
+            controller: _submitBtnController,
+            color: ThemeManager.getAccentColor(),
+            errorColor: Color(0xffff5252), 
             onPressed: () {
-              if (!_formKey.currentState.validate()) return;
+              if (!_formKey.currentState.validate()) {
+                _submitBtnController.reset();
+                return;
+              }
               _formKey.currentState.save();
               LoginService.saveUser(_firstName, _lastName, _password).then((UserInfo userInfo) {
                 userInfoBloc.setUser(userInfo);
-                homeBloc.setUserConfirmed();
+                _submitBtnController.success();
+                Future.delayed(Duration(seconds: 2), () => homeBloc.setUserConfirmed());
               }).catchError((err) {
+                _submitBtnController.error();
                 final snackBar = SnackBar(content: Text(err.toString()));
                 ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                Future.delayed(Duration(seconds: 2), () => _submitBtnController.reset());
               });
-            },
-            text: 'Confirmar datos',
-            textStyle: TextStyle(fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold),
+            }, 
+            child: Text('Confirmar datos', style: TextStyle(color: Colors.white))
           )
+          // RoundedButton(
+          //   color: ThemeManager.getPrimaryColor(),
+            // onPressed: () {
+            //   if (!_formKey.currentState.validate()) return;
+            //   _formKey.currentState.save();
+            //   LoginService.saveUser(_firstName, _lastName, _password).then((UserInfo userInfo) {
+            //     userInfoBloc.setUser(userInfo);
+            //     homeBloc.setUserConfirmed();
+            //   }).catchError((err) {
+            //     final snackBar = SnackBar(content: Text(err.toString()));
+            //     ScaffoldMessenger.of(context).showSnackBar(snackBar);
+            //   });
+            // },
+          //   text: 'Confirmar datos',
+          //   textStyle: TextStyle(fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold),
+          // )
         ],
       ),
     );
