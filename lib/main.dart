@@ -1,12 +1,14 @@
 
-import 'package:asopedia/src/bloc/list/list_cubit.dart';
-import 'package:asopedia/src/bloc/userinfo/userinfo_cubit.dart';
-import 'package:asopedia/src/themes/theme_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'dart:convert';
 
 import 'package:asopedia/src/bloc/snackmessages/snackmessages_cubit.dart';
+import 'package:asopedia/src/bloc/favorites/favorites_cubit.dart';
+import 'package:asopedia/src/bloc/list/list_cubit.dart';
+import 'package:asopedia/src/bloc/userinfo/userinfo_cubit.dart';
+import 'package:asopedia/src/themes/theme_manager.dart';
 import 'package:asopedia/src/route_manager.dart';
 import 'package:asopedia/src/util/user_preferences.dart';
  
@@ -22,7 +24,8 @@ Future<void> main() async {
       providers: [
         BlocProvider(create: (_) => SnackmessagesCubit()),
         BlocProvider(create: (_) => UserinfoCubit()),
-        BlocProvider(create: (_) => ListCubit())
+        BlocProvider(create: (_) => ListCubit()),
+        BlocProvider(create: (_) => FavoritesCubit())
       ], 
       child: MyApp()
     )
@@ -48,8 +51,13 @@ class MyApp extends StatelessWidget {
       initialRoute = 'login';
     }
 
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown
+    ]);
+
     return MaterialApp(
-      title: 'Material App',
+      title: 'ASOPEDIA',
       initialRoute: initialRoute,
       debugShowCheckedModeBanner: false,
       theme: ThemeManager.getLightTheme(),

@@ -5,8 +5,12 @@ class AppCategory {
   final String title;
   final String subtitle;
   final String id;
+  final String openBrowser;
+  final String slug;
 
   AppCategory({
+    this.openBrowser,
+    @required this.slug,
     @required this.icon, 
     @required this.title, 
     @required this.subtitle, 

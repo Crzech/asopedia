@@ -1,23 +1,22 @@
-import 'package:asopedia/src/models/shared/dropdown_item.dart';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:asopedia/src/models/posts/abstract_post.dart';
-import 'package:asopedia/src/services/posts/posts_service.dart';
 
 part 'list_state.dart';
   
 class ListCubit extends Cubit<ListState> {
   ListCubit() : super(ListInitial());
 
-  void setLoadingChildCategories(String title, String parentCategory) =>
-    emit(ListInitialized(title: title, parentCategory: parentCategory, selectedCat: parentCategory));
+  void setLoadingChildCategories(String title, String parentCategory, String slug) =>
+    emit(ListInitialized(title: title, parentCategory: parentCategory, selectedCat: parentCategory, slug: slug));
 
   void setListLoading() =>
     emit(ListLoading(
       parentCategory: state.parentCategory, 
       title: state.title, 
       selectedCat: state.selectedCat,
-      posts: state.posts
+      posts: state.posts,
+      slug: state.slug,
     )); 
 
   void setNewPosts(List<AbstractPost> posts) => 
@@ -25,7 +24,8 @@ class ListCubit extends Cubit<ListState> {
       title: state.title, 
       parentCategory: state.parentCategory, 
       selectedCat: state.selectedCat, 
-      posts: [...state.posts, ...posts]
+      posts: [...state.posts, ...posts],
+      slug: state.slug,
     ));
 
   void changeCategory(String newCategory, List<AbstractPost> posts) =>
@@ -33,7 +33,8 @@ class ListCubit extends Cubit<ListState> {
       title: state.title, 
       parentCategory: state.parentCategory, 
       selectedCat: newCategory, 
-      posts: posts
+      posts: posts,
+      slug: state.slug,
     ));
 
   void setListError() => emit(ListError());

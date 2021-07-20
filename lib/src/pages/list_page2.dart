@@ -1,13 +1,13 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter/material.dart';
+
+import 'package:asopedia/src/services/categories/main_categories_service.dart';
 import 'package:asopedia/src/bloc/list/list_cubit.dart';
 import 'package:asopedia/src/models/posts/abstract_post.dart';
 import 'package:asopedia/src/models/shared/dropdown_item.dart';
 import 'package:asopedia/src/services/posts/posts_service.dart';
 import 'package:asopedia/src/widgets/list/post_loader.dart';
 import 'package:asopedia/src/widgets/list/post_scrollview.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter/material.dart';
-
-import 'package:asopedia/src/services/categories/main_categories_service.dart';
 
 class ListPage2 extends StatefulWidget {
   @override
@@ -16,7 +16,7 @@ class ListPage2 extends StatefulWidget {
 
 class _ListPage2State extends State<ListPage2> {
   final ScrollController _scrollController = new ScrollController();
-  static const _pageSize = 2;
+  static const _pageSize = 10;
   int _currentPage = 1;
 
   @override
@@ -24,10 +24,12 @@ class _ListPage2State extends State<ListPage2> {
     super.didChangeDependencies();
     ListCubit _listBloc = BlocProvider.of<ListCubit>(context);
     final _pageDefaultValues = _listBloc.state;
-    _listBloc.setListLoading();
-    _fetchPage(_currentPage, _pageDefaultValues.selectedCat)
+    if (_pageDefaultValues.posts.length < 1) {
+      _listBloc.setListLoading();
+      _fetchPage(_currentPage, _pageDefaultValues.selectedCat)
         .then((newPosts) => _listBloc.setNewPosts(newPosts))
         .catchError((err) => _listBloc.setListError());
+    } 
     _scrollController.addListener(() {
       ListCubit _listBloc = BlocProvider.of<ListCubit>(context);
       if (_scrollController.position.pixels == _scrollController.position.maxScrollExtent) {
@@ -41,14 +43,16 @@ class _ListPage2State extends State<ListPage2> {
             }
             _listBloc.setNewPosts(newPosts);
           })
-          .catchError((err) => _listBloc.setListError());
+          .catchError((err) {
+            _listBloc.setListError();
+          });
       }
     });
   }
 
   Future<List<AbstractPost>> _fetchPage(int pageKey, String _selectedCat) async {
     print('pasando pagina no: $pageKey en cat $_selectedCat');
-    final _newItems = await PostService.getPostsByCategoryId(_selectedCat, pageKey, _pageSize);
+    final _newItems = await PostService.getPostsByCategoryId(_selectedCat, pageKey, _pageSize).catchError((err) => throw err);
     return _newItems;
   }
 
@@ -57,7 +61,7 @@ class _ListPage2State extends State<ListPage2> {
     final screenSize = MediaQuery.of(context).size;
     final _listBloc = BlocProvider.of<ListCubit>(context);
     return Scaffold(
-      backgroundColor: Color(0xFFEEEEEE),
+      backgroundColor: Colors.white,
       body: BlocBuilder<ListCubit, ListState>(
         builder: (context, state) {
           if (state is ListError) {
@@ -91,6 +95,18 @@ class _ListPage2State extends State<ListPage2> {
                     ),
                     PostLoader(posts: state.posts, isLoading: state.isLoading)
                   ],
+                );
+              }
+
+              if(snapshot.hasError) {
+                return Center(
+                  child: Padding(
+                    child: Text(
+                      'Ha ocurrido un error desconocido, por favor inténtelo de nuevo',
+                      textAlign: TextAlign.center,
+                    ),
+                    padding: EdgeInsets.symmetric(horizontal: 20),
+                  ),
                 );
               }
               return Center(child: CircularProgressIndicator());

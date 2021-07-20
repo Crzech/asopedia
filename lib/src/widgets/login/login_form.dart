@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rounded_loading_button/rounded_loading_button.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'package:asopedia/src/services/login/login_service.dart';
 import 'package:asopedia/src/bloc/snackmessages/snackmessages_cubit.dart';
 import 'package:asopedia/src/util/user_preferences.dart';
 import 'package:asopedia/src/util/login_exception.dart';
 import 'package:asopedia/src/models/user/user.dart';
+import 'package:asopedia/src/widgets/login/social_media.dart';
 import 'package:asopedia/src/themes/theme_manager.dart';
 import 'package:asopedia/src/widgets/login/password_field.dart';
-import 'package:rounded_loading_button/rounded_loading_button.dart';
 
 class LoginForm extends StatefulWidget {
   @override
@@ -24,6 +26,8 @@ class __LoginFormState extends State<LoginForm> {
   String _password = '';
   bool _showPassword = false;
   IconData _iconPassword = Icons.visibility;
+  final _requirementsUrl = 'https://docs.google.com/forms/d/e/1FAIpQLSeDmO_49e-49A5OhoP054rBkKKXdsPyTo2Wab8u_uQUj-H4bw/viewform';
+  final _privacyPolicyUrl = 'https://asopedia.com/asociate/';
   @override
   Widget build(BuildContext context) {
     final snackMessagesBloc = BlocProvider.of<SnackmessagesCubit>(context);
@@ -41,8 +45,22 @@ class __LoginFormState extends State<LoginForm> {
             padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 25),
             child: Column(
               children: [
-                Text('ASOPEDIA', style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
-                SizedBox(height: 25),
+                Text(
+                  'ASOPEDIA', style: TextStyle(
+                    fontSize: 30, 
+                    fontWeight: FontWeight.bold,
+                    color: ThemeManager.getPrimaryColor()
+                  )
+                ),
+                Text(
+                  'Asociación Pediátrica de Guatemala',
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: ThemeManager.getAccentColor(),
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: 20),
                 TextFormField(
                   validator: (value) =>
                       value.isEmpty ? 'Este campo es requerido' : null,
@@ -50,9 +68,9 @@ class __LoginFormState extends State<LoginForm> {
                     _userName = value;
                   }),
                   decoration:
-                      InputDecoration(labelText: 'Ingresa tu e-mail o usuario'),
+                      InputDecoration(labelText: 'No. de colegiado'),
                 ),
-                SizedBox(height: 25),
+                SizedBox(height: 20),
                 PasswordField(
                   _iconPassword, 
                   _showPassword, 
@@ -96,7 +114,19 @@ class __LoginFormState extends State<LoginForm> {
                     });
                   },
                   child: Text('Iniciar sesión', style: TextStyle(color: Colors.white))
-                )
+                ),
+                SizedBox(height: 15.0),
+                GestureDetector(
+                  onTap: () async => await canLaunch(_requirementsUrl) ? await launch(_requirementsUrl) : print('failed launching url'),
+                  child: Text('Formulario para asociarse', style: TextStyle(color: ThemeManager.getPrimaryColor()),),
+                ),
+                GestureDetector(
+                  onTap: () async => await canLaunch(_privacyPolicyUrl) ? await launch(_privacyPolicyUrl) : print('failed launching url'),
+                  child: Text('Políticas de privacidad', style: TextStyle(color: ThemeManager.getPrimaryColor())),
+                ),
+                SizedBox(height: 20.0),
+                SocialMedia(),
+                Text('Derechos reservados ASOPEDIA - 2021', style: TextStyle(color: ThemeManager.getPrimaryColor()))
               ],
             ),
           ),

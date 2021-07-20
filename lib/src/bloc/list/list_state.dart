@@ -7,6 +7,7 @@ abstract class ListState {
   final String parentCategory = '';
   final List<AbstractPost> posts = [];
   final String selectedCat = '';
+  final String slug = 'generic';
 
 }
 
@@ -16,6 +17,7 @@ class ListInitial implements ListState {
   final bool isLoading = true;
   final List<AbstractPost> posts = [];
   final String selectedCat = '';
+  final String slug = 'generic';
 }
 
 class ListError implements ListState {
@@ -24,6 +26,7 @@ class ListError implements ListState {
   final bool isLoading = true;
   final List<AbstractPost> posts = [];
   final String selectedCat = '';
+  final String slug = 'generic';
 }
 
 class ListInitialized implements ListState {
@@ -32,11 +35,13 @@ class ListInitialized implements ListState {
   final bool isLoading = true;
   final List<AbstractPost> posts = [];
   final String selectedCat;
+  final String slug;
 
   ListInitialized({
     @required this.title,
     @required this.parentCategory,
-    @required this.selectedCat
+    @required this.selectedCat,
+    @required this.slug
   });
 }
 
@@ -46,12 +51,14 @@ class ListLoading implements ListState {
   final bool isLoading = true;
   final List<AbstractPost> posts;
   final String selectedCat;
+  final String slug;
 
   ListLoading({
     @required this.title,
     @required this.parentCategory,
     @required this.selectedCat,
     @required this.posts,
+    @required this.slug
   });
 }
 class ListLoaded implements ListState {
@@ -60,11 +67,14 @@ class ListLoaded implements ListState {
   final bool isLoading = false;
   final List<AbstractPost> posts;
   final String selectedCat;
+  final String slug; 
+
 
   ListLoaded({
     @required this.title,
     @required this.parentCategory,
     @required this.selectedCat,
     @required this.posts,
+    @required this.slug
   });
 }

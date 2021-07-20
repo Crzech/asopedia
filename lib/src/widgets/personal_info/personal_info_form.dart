@@ -1,14 +1,13 @@
-import 'package:asopedia/src/models/user/user_info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rounded_loading_button/rounded_loading_button.dart';
 
 import 'package:asopedia/src/themes/theme_manager.dart';
 import 'package:asopedia/src/widgets/login/password_field.dart';
 import 'package:asopedia/src/services/login/login_service.dart';
-import 'package:asopedia/src/widgets/shared/rounded_button.dart';
 import 'package:asopedia/src/bloc/home/home_cubit.dart';
 import 'package:asopedia/src/bloc/userinfo/userinfo_cubit.dart';
-import 'package:rounded_loading_button/rounded_loading_button.dart';
+import 'package:asopedia/src/models/user/user_info.dart';
 
 class PersonalInfoForm extends StatefulWidget {
   @override
@@ -22,7 +21,7 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
   bool _showPassword1 = false;
   bool _showPassword2 = false;
   GlobalKey<FormState> _formKey = new GlobalKey();
-  GlobalKey<FormFieldState> _passwordFieldKey = new GlobalKey();
+  GlobalKey<FormFieldState> _passwordFieldKey = new GlobalKey<FormFieldState>();
   String _firstName = '';
   String _lastName = '';
   String _password = '';

@@ -38,15 +38,18 @@ class PostScrollView extends StatelessWidget {
                   minHeight: screenSize.height * 0.20,
                   maxHeight: screenSize.height * 0.25,
                   child: Container(
-                    color: Color(0xff155682),
-                    padding: EdgeInsets.symmetric(horizontal: 20.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
+                    child: Stack(
                       children: [
-                        PostsAppBar(),
-                        SizedBox(height: 25.0),
-                        categories.length > 1 ? CategoryDropdown(categories: categories, onChanged: onChangedDropdown) : Container(),
-                        SizedBox(height: 20.0),
+                        Positioned( bottom: 20, child: PostsAppBar(screenSize: screenSize)),
+                        Align(
+                          alignment: Alignment.bottomCenter, 
+                          child: categories.length > 1 
+                            ? Padding(
+                              padding: const EdgeInsets.all(5.0),
+                              child: CategoryDropdown(categories: categories, onChanged: onChangedDropdown),
+                            ) 
+                            : Container()
+                        ),
                       ],
                     ),
                   )),

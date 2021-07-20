@@ -1,9 +1,11 @@
 import 'package:asopedia/src/models/posts/abstract_post.dart';
 import 'package:asopedia/src/models/posts/content.dart';
+import 'package:asopedia/src/models/posts/post_image.dart';
 import 'package:meta/meta.dart';
 import 'dart:convert';
 
 class GlossaryPost implements AbstractPost {
+
   GlossaryPost({
     @required this.id,
     @required this.date,
@@ -17,6 +19,7 @@ class GlossaryPost implements AbstractPost {
     @required this.link,
     @required this.title,
     @required this.content,
+    @required this.embedeData,
   });
 
   int id;
@@ -31,6 +34,7 @@ class GlossaryPost implements AbstractPost {
   String link;
   RenderedField title;
   Content content;
+  EmbedeData embedeData;
 
   factory GlossaryPost.fromRawJson(String str) => GlossaryPost.fromJson(json.decode(str));
 
@@ -49,6 +53,7 @@ class GlossaryPost implements AbstractPost {
         link: json["link"],
         title: RenderedField.fromJson(json["title"]),
         content: Content.fromJson(json["content"]),
+        embedeData: json.containsKey('_embedded') ? EmbedeData.fromJson(json['_embedded']) : null
       );
 
   Map<String, dynamic> toJson() => {

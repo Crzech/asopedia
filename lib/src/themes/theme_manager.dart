@@ -7,6 +7,7 @@ class ThemeManager {
   static ThemeData getLightTheme() => ThemeData(
     primaryColor: _primaryColor,
     accentColor: _accentColor,
+    fontFamily: 'MyriadPro'
   );
 
   static Color getPrimaryColor() => _primaryColor;

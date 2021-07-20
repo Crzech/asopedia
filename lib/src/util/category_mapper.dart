@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:asopedia/src/models/categories/category.dart';
 import 'package:asopedia/src/models/categories/app_category.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class CategoryMapper {
 
@@ -11,40 +12,47 @@ class CategoryMapper {
     final _categoriesMap = <String, AppCategory>{
       'actualidad': AppCategory(
         id: cat.id.toString(),
-        icon: Icons.trending_up,
+        icon: FontAwesomeIcons.sync,
         title: 'Actualidad',
-        subtitle: 'Tendencias'
+        subtitle: '',
+        slug: cat.slug
       ),
       'buscador-de-medicamentos': AppCategory(
         id: cat.id.toString(),
-        icon: Icons.search,
-        title: 'Buscador',
-        subtitle: 'De medicamentos'
+        icon: FontAwesomeIcons.notesMedical,
+        title: 'Medicamentos',
+        subtitle: 'De medicamentos',
+        openBrowser: 'http://e-lactancia.org',
+        slug: cat.slug
       ),
       'eventos': AppCategory(
         id: cat.id.toString(),
-        icon: Icons.calendar_today,
-        title: 'Eventos',
-        subtitle: 'Institucionales'
+        icon: FontAwesomeIcons.calendarAlt,
+        title: 'Eventos institucionales',
+        subtitle: '',
+        slug: cat.slug
       ),
       'recursos': AppCategory(
         id: cat.id.toString(),
-        icon: Icons.book,
-        title: 'Recursos',
-        subtitle: 'Estudios médicos'
+        icon: FontAwesomeIcons.fileMedical,
+        title: 'Recursos - Estudios médicos',
+        subtitle: '',
+        slug: cat.slug
       ),
       'revista': AppCategory(
         id: cat.id.toString(),
-        icon: Icons.announcement,
-        title: 'Revista',
-        subtitle: 'Pediátrica'
+        icon: FontAwesomeIcons.book,
+        title: 'Guatemala Pediátrica',
+        subtitle: '',
+        slug: cat.slug
       )
     };
     final defaultCategory = AppCategory(
       icon: Icons.article, 
       title: cat.name, 
       subtitle: cat.description, 
-      id: cat.id.toString()
+      id: cat.id.toString(),
+      slug: cat.slug
     );
 
     return (_categoriesMap ?? const {})[cat.slug] ?? defaultCategory;

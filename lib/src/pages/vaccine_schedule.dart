@@ -18,6 +18,13 @@ class VaccineSchedulePage extends StatelessWidget {
           shadowColor: ThemeManager.getPrimaryColor(),
           backgroundColor: ThemeManager.getPrimaryColor(),
           foregroundColor: ThemeManager.getPrimaryColor(),
+          leading: IconButton(icon: Icon(Icons.arrow_back_ios), padding: EdgeInsets.all(0), onPressed: () => Navigator.pop(context)),
+          centerTitle: true,
+          title: Text(
+            'Esquema de vacunación',
+            textAlign: TextAlign.center,
+            style: TextStyle(color: Colors.white, fontSize: 20.0, fontWeight: FontWeight.bold)
+          )
         ),
         body: CustomScrollView(
           slivers: [

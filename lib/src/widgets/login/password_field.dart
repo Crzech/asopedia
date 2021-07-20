@@ -6,7 +6,7 @@ class PasswordField extends StatelessWidget {
   final Function(String) onSaved;
   final Function onTapEye;
   final Function(String) validator;
-  GlobalKey<FormFieldState> confirmationKey = new GlobalKey();
+  final GlobalKey<FormFieldState> confirmationKey;
 
   PasswordField(this.iconPassword, this.showPassword, this.onSaved, this.onTapEye, this.validator, { this.confirmationKey });
 
@@ -18,7 +18,7 @@ class PasswordField extends StatelessWidget {
       validator: this.validator,
       onSaved: onSaved,
       decoration: InputDecoration(
-        labelText: 'Ingresa tu contraseña',
+        labelText: 'Contraseña',
         suffixIcon: GestureDetector(
           onTap: onTapEye,
           child: Icon(iconPassword),

@@ -1,5 +1,6 @@
 import 'package:asopedia/src/models/posts/abstract_post.dart';
 import 'package:asopedia/src/pages/post_page.dart';
+import 'package:asopedia/src/themes/theme_manager.dart';
 import 'package:asopedia/src/widgets/shared/list_child.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';  //for date format/for date locale
@@ -27,7 +28,7 @@ class _PostListChildState extends State<PostListChild> {
   }
   @override
   Widget build(BuildContext context) {
-    final textWidth = MediaQuery.of(context).size.width * 0.6;
+    final textWidth = MediaQuery.of(context).size.width * 0.70;
     final dateFormat = DateFormat.yMMMMd('es_ES');
     final title = widget.post.title.rendered;
     final date = widget.post.date;
@@ -35,13 +36,16 @@ class _PostListChildState extends State<PostListChild> {
       onTap: () => Navigator.pushNamed(context, 'post', arguments: PostPageArguments(post: widget.post)),
       child: Container(
         width: 100,
-        height: 400,
+        height: 100,
         decoration: BoxDecoration(
           color: Colors.white,
           shape: BoxShape.rectangle,
-          border: Border.all(
-            color: Color(0xFFD8D8D8),
-          ),
+          border: Border(
+            bottom: BorderSide(
+              color: ThemeManager.getAccentColor(),
+              width: 1.0
+            )
+          )
         ),
         child: ListChild(textWidth: textWidth, title: title, dateFormat: dateFormat, date: date),
       ),

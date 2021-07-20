@@ -8,14 +8,15 @@ class LoginPage extends StatelessWidget {
     final screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       body: SingleChildScrollView(
-        physics: ClampingScrollPhysics(),
         child: Container(
-          height: screenHeight,
+          width: double.infinity,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              SizedBox(height: screenHeight * 0.10),
               _Logo(screenHeight: screenHeight),
-              SizedBox(height: screenHeight * 0.05),
+              SizedBox(height: screenHeight * 0.10),
               _LoginContainer(screenHeight: screenHeight)
             ],
           ),
@@ -33,9 +34,9 @@ class _Logo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: screenHeight * 0.25,
-      padding: EdgeInsets.symmetric(horizontal: 25, vertical: 25),
-      child: Image(image: AssetImage('assets/images/logo.png'), fit: BoxFit.scaleDown),
+      height: screenHeight * 0.20,
+      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+      child: Image(image: AssetImage('assets/images/logo.png'), fit: BoxFit.cover),
       decoration: BoxDecoration(
         color: Colors.white,
         shape: BoxShape.circle
@@ -56,7 +57,7 @@ class _LoginContainer extends StatelessWidget {
     return Container(
       child: LoginForm(),
       width: double.infinity,
-      height: screenHeight * 0.60,
+      height: screenHeight * 0.75,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.only(topLeft: Radius.circular(80.0)),
         color: Colors.white
