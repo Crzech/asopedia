@@ -17,7 +17,7 @@ class PostService {
       'categories_exclude': '77,1'
     };
     final response = await http.get(
-      Uri.https('sgc.asopedia.com', 'wp-json/wp/v2/posts', params),
+      Uri.https('asopedia.com', 'wp-json/wp/v2/posts', params),
       headers: <String, String>{
         'Authorization': 'Bearer ${_prefs.token}',
         'Content-Type': 'application/json; charset=UTF-8',
@@ -29,7 +29,6 @@ class PostService {
           .map((e) => GlossaryPost.fromJson(Map<String, dynamic>.from(e)))
           .toList();
     } else if (response.statusCode == 400) {
-      print(params);
       return [];
     } else {
       throw LoginException(
@@ -48,7 +47,7 @@ class PostService {
       'categories_exclude': '1'
     };
     final response = await http.get(
-      Uri.https('sgc.asopedia.com', 'wp-json/wp/v2/posts', params),
+      Uri.https('asopedia.com', 'wp-json/wp/v2/posts', params),
       headers: <String, String>{
         'Authorization': 'Bearer ${_prefs.token}',
         'Content-Type': 'application/json; charset=UTF-8',
@@ -71,7 +70,7 @@ class PostService {
   static Future<GlossaryPost> getPostsById(int postId) async {
     UserPreferences _prefs = UserPreferences();
     final response = await http.get(
-        Uri.https('sgc.asopedia.com', 'wp-json/wp/v2/posts/$postId',
+        Uri.https('asopedia.com', 'wp-json/wp/v2/posts/$postId',
             {'_embed': 'true'}),
         headers: <String, String>{
           'Authorization': 'Bearer ${_prefs.token}',
@@ -94,7 +93,7 @@ class PostService {
   static Future<bool> addToFavorites(AbstractPost post) async {
     UserPreferences _prefs = UserPreferences();
     final response = await http.post(
-        Uri.https('sgc.asopedia.com', 'wp-json/user/favorites'),
+        Uri.https('asopedia.com', 'wp-json/user/favorites'),
         headers: <String, String>{
           'Authorization': 'Bearer ${_prefs.token}',
           'Content-Type': 'application/json; charset=UTF-8',
@@ -116,7 +115,7 @@ class PostService {
   static Future<bool> removeFromFavorites(AbstractPost post) async {
     UserPreferences _prefs = UserPreferences();
     final response = await http.delete(
-      Uri.https('sgc.asopedia.com', 'wp-json/user/favorites/${post.id}'),
+      Uri.https('asopedia.com', 'wp-json/user/favorites/${post.id}'),
       headers: <String, String>{
         'Authorization': 'Bearer ${_prefs.token}',
         'Content-Type': 'application/json; charset=UTF-8',
@@ -134,7 +133,7 @@ class PostService {
   static Future<List<FavoritesResult>> getFavorites() async {
     UserPreferences _prefs = UserPreferences();
     final response = await http.get(
-        Uri.https('sgc.asopedia.com', 'wp-json/user/favorites'),
+        Uri.https('asopedia.com', 'wp-json/user/favorites'),
         headers: <String, String>{
           'Authorization': 'Bearer ${_prefs.token}',
           'Content-Type': 'application/json; charset=UTF-8',

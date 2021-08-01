@@ -18,7 +18,7 @@ import 'package:asopedia/src/models/shared/dropdown_item.dart';
 Future<List<DropdownItem>> getChildCategories(String parentCategory) async {
   UserPreferences _prefs = UserPreferences();
   final response = await http.get(
-    Uri.https('sgc.asopedia.com', 'wp-json/wp/v2/categories', { 'parent': parentCategory }),
+    Uri.https('asopedia.com', 'wp-json/wp/v2/categories', { 'parent': parentCategory }),
     headers: <String, String>{
       'Authorization': 'Bearer ${_prefs.token}',
       'Content-Type': 'application/json; charset=UTF-8',
@@ -41,7 +41,7 @@ Future<List<DropdownItem>> getChildCategories(String parentCategory) async {
 Future<List<AppCategory>> getParentCategories() async {
   UserPreferences _prefs = UserPreferences();
   final response = await http.get(
-    Uri.https('sgc.asopedia.com', 'wp-json/wp/v2/categories', { 'parent': '0' }),
+    Uri.https('asopedia.com', 'wp-json/wp/v2/categories', { 'parent': '0' }),
     headers: <String, String> {
       'Authorization': 'Bearer ${_prefs.token}',
       'Content-Type': 'application/json; charset=UTF-8',

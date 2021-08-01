@@ -14,7 +14,7 @@ class SearchService {
       '_embed': 'true'
     };
     final response = await http.get(
-      Uri.https('sgc.asopedia.com', '/wp-json/wp/v2/posts', _params),
+      Uri.https('asopedia.com', '/wp-json/wp/v2/posts', _params),
       headers: <String, String> {
         'Authorization': 'Bearer ${_prefs.token}',
         'Content-Type': 'application/json; charset=UTF-8'

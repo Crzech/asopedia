@@ -9,7 +9,7 @@ import 'package:asopedia/src/models/user/user_info.dart';
 class LoginService {
   static Future<User> authUser(username, password) async {
     final response = await http.post(
-      Uri.https('sgc.asopedia.com', 'wp-json/jwt-auth/v1/token'),
+      Uri.https('asopedia.com', 'wp-json/jwt-auth/v1/token'),
       headers: <String, String> {
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -30,7 +30,7 @@ class LoginService {
   static Future<UserInfo> getUserInfo(userId) async {
     UserPreferences _prefs = UserPreferences();
     final response = await http.get(
-      Uri.https('sgc.asopedia.com', 'wp-json/wp/v2/users/$userId', { 'context': 'edit' }),
+      Uri.https('asopedia.com', 'wp-json/wp/v2/users/$userId', { 'context': 'edit' }),
       headers: <String, String> {
         'Content-Type': 'application/json; charsest=UTF-8',
         'Authorization': 'Bearer ${_prefs.token}'
@@ -57,7 +57,7 @@ class LoginService {
     };
 
     final response = await http.put(
-      Uri.https('sgc.asopedia.com', 'wp-json/wp/v2/users/$userId'),
+      Uri.https('asopedia.com', 'wp-json/wp/v2/users/$userId'),
       headers: headers,
       body: jsonEncode(<String, String>{
         'first_name': firstName,

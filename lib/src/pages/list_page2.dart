@@ -51,7 +51,6 @@ class _ListPage2State extends State<ListPage2> {
   }
 
   Future<List<AbstractPost>> _fetchPage(int pageKey, String _selectedCat) async {
-    print('pasando pagina no: $pageKey en cat $_selectedCat');
     final _newItems = await PostService.getPostsByCategoryId(_selectedCat, pageKey, _pageSize).catchError((err) => throw err);
     return _newItems;
   }
