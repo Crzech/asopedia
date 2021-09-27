@@ -16,23 +16,36 @@ class PostService {
       '_embed': 'true',
       'categories_exclude': '77,1'
     };
-    final response = await http.get(
-      Uri.https('asopedia.com', 'wp-json/wp/v2/posts', params),
-      headers: <String, String>{
-        'Authorization': 'Bearer ${_prefs.token}',
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-    );
-
-    if (response.statusCode == 200) {
-      return (jsonDecode(response.body) as List)
-          .map((e) => GlossaryPost.fromJson(Map<String, dynamic>.from(e)))
-          .toList();
-    } else if (response.statusCode == 400) {
-      return [];
-    } else {
-      throw LoginException(
-          'Los servidores no estan funcionando, inténtelo de nuevo');
+    // print(Uri.https('asopedia.com', 'wp-json/wp/v2/posts', params));
+    try {
+      final response = await http.get(
+        Uri.https('asopedia.com', 'wp-json/wp/v2/posts',
+            params),
+        headers: <String, String>{
+          'Authorization': 'Bearer ${_prefs.token}',
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+      );
+      if (response.statusCode == 200) {
+        List test = jsonDecode(response.body);
+        List result = test.map((e) {
+          final item = Map<String, dynamic>.from(e);
+          final model = GlossaryPost.fromJson(item);
+          return model;
+        }).toList();
+        // return (jsonDecode(response.body) as List)
+        //     .map((e) => GlossaryPost.fromJson(Map<String, dynamic>.from(e)))
+        //     .toList();
+        return result;
+      } else if (response.statusCode == 400) {
+        return [];
+      } else {
+        print(response.statusCode);
+        throw LoginException(
+            'Los servidores no estan funcionando, inténtelo de nuevo');
+      }
+    } catch (err) {
+      print(err);
     }
   }
 
@@ -70,8 +83,8 @@ class PostService {
   static Future<GlossaryPost> getPostsById(int postId) async {
     UserPreferences _prefs = UserPreferences();
     final response = await http.get(
-        Uri.https('asopedia.com', 'wp-json/wp/v2/posts/$postId',
-            {'_embed': 'true'}),
+        Uri.https(
+            'asopedia.com', 'wp-json/wp/v2/posts/$postId', {'_embed': 'true'}),
         headers: <String, String>{
           'Authorization': 'Bearer ${_prefs.token}',
           'Content-Type': 'application/json; charset=UTF-8',
@@ -142,8 +155,10 @@ class PostService {
     if (response.statusCode == 200) {
       final dataList = (jsonDecode(response.body) as List);
       if (dataList.length > 0) {
-        return (dataList[0]['favorites'] as List).map((e) => FavoritesResult.fromJson(e)).toList();
-      } 
+        return (dataList[0]['favorites'] as List)
+            .map((e) => FavoritesResult.fromJson(e))
+            .toList();
+      }
       return [];
     } else {
       throw LoginException(

@@ -27,7 +27,8 @@ class __LoginFormState extends State<LoginForm> {
   bool _showPassword = false;
   IconData _iconPassword = Icons.visibility;
   final _requirementsUrl = 'https://docs.google.com/forms/d/e/1FAIpQLSeDmO_49e-49A5OhoP054rBkKKXdsPyTo2Wab8u_uQUj-H4bw/viewform';
-  final _privacyPolicyUrl = 'https://asopedia.com/asociate/';
+  final _privacyPolicyUrl = 'https://asopedia.com/politicas-de-privacidad/';
+  final _resetPassword = 'https://asopedia.com/wp-login.php?action=lostpassword';
   @override
   Widget build(BuildContext context) {
     final snackMessagesBloc = BlocProvider.of<SnackmessagesCubit>(context);
@@ -114,6 +115,11 @@ class __LoginFormState extends State<LoginForm> {
                     });
                   },
                   child: Text('Iniciar sesión', style: TextStyle(color: Colors.white))
+                ),
+                SizedBox(height: 10.0),
+                GestureDetector(
+                  onTap: () async => await canLaunch(_resetPassword) ? await launch(_resetPassword) : print('failed launching url'),
+                  child: Text('Recuperar contraseña', style: TextStyle(color: ThemeManager.getPrimaryColor()),),
                 ),
                 SizedBox(height: 15.0),
                 GestureDetector(
