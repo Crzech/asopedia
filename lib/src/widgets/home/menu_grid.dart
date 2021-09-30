@@ -41,13 +41,11 @@ class MenuGrid extends StatelessWidget {
                     case TrackingStatus.authorized:
                       launch(e.openBrowser);
                       break;
-                    case TrackingStatus.denied:
                     case TrackingStatus.notDetermined:
-                    case TrackingStatus.restricted:
                       await AppTrackingTransparency.requestTrackingAuthorization();
                       break;
                     default:
-                      final _snackBar = SnackBar(content: Text('Lo sentimos, su dispositivo no admite cookies de proveedores externos.'));
+                      final _snackBar = SnackBar(content: Text('Lo sentimos, su dispositivo no admite cookies de proveedores externos, para arreglar esto, vaya a Configuración > ASOPEDIA > Permitir rastreo.'));
                       ScaffoldMessenger.of(context).showSnackBar(_snackBar);
                   }
                 } on PlatformException {
