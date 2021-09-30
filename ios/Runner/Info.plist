@@ -51,5 +51,7 @@
 	<false/>
 	<key>io.flutter.embedded_views_preview</key>
 	<string>YES</string>
+	<key>NSUserTrackingUsageDescription</key>
+	<string>Esta página necesita información de cookies para funcionar.</string>
 </dict>
 </plist>

@@ -1,5 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:app_tracking_transparency/app_tracking_transparency.dart';
+
 
 import 'package:asopedia/src/models/categories/app_category.dart';
 import 'package:asopedia/src/bloc/list/list_cubit.dart';
@@ -30,7 +35,28 @@ class MenuGrid extends StatelessWidget {
         'onTap': () async {
           if (e.openBrowser != null && e.openBrowser.length > 0){
             if ((await canLaunch(e.openBrowser))) {
-              launch(e.openBrowser);
+              if (Platform.isIOS) {
+                try {
+                  switch (await AppTrackingTransparency.trackingAuthorizationStatus) {
+                    case TrackingStatus.authorized:
+                      launch(e.openBrowser);
+                      break;
+                    case TrackingStatus.denied:
+                    case TrackingStatus.notDetermined:
+                    case TrackingStatus.restricted:
+                      await AppTrackingTransparency.requestTrackingAuthorization();
+                      break;
+                    default:
+                      final _snackBar = SnackBar(content: Text('Lo sentimos, su dispositivo no admite cookies de proveedores externos.'));
+                      ScaffoldMessenger.of(context).showSnackBar(_snackBar);
+                  }
+                } on PlatformException {
+                  final _snackBar = SnackBar(content: Text('Lo sentimos, ha ocurrido un error inesperado.'));
+                  ScaffoldMessenger.of(context).showSnackBar(_snackBar);
+                }
+              } else {
+                launch(e.openBrowser);
+              }
             } else {
               final _snackBar = SnackBar(content: Text('Lo sentimos, ha ocurrido un error inesperado, inténtelo de nuevo'));
               ScaffoldMessenger.of(context).showSnackBar(_snackBar);
