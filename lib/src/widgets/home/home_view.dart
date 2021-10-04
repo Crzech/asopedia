@@ -1,6 +1,9 @@
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:app_tracking_transparency/app_tracking_transparency.dart';
 
 import 'package:asopedia/src/widgets/home/animated_greeting.dart';
 import 'package:asopedia/src/widgets/home/home_swiper.dart';
@@ -13,6 +16,19 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
+
+    if (Platform.isIOS) {
+      AppTrackingTransparency.trackingAuthorizationStatus
+        .then((TrackingStatus status) {
+          if (status == TrackingStatus.notDetermined) {
+            AppTrackingTransparency.requestTrackingAuthorization();
+          }
+        })
+        .catchError((_) {
+          final _snackBar = SnackBar(content: Text('Lo sentimos, ha ocurrido un error inesperado, inténtelo de nuevo'));
+          ScaffoldMessenger.of(context).showSnackBar(_snackBar);
+        });
+    }
     return BlocBuilder<UserinfoCubit, UserinfoState>(
       builder: (context, userInfo) {
         String firstName = '';
