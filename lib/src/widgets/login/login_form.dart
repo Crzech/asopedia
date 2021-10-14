@@ -116,21 +116,44 @@ class __LoginFormState extends State<LoginForm> {
                   },
                   child: Text('Iniciar sesión', style: TextStyle(color: Colors.white))
                 ),
-                SizedBox(height: 10.0),
+                SizedBox(height: 5.0),
                 GestureDetector(
                   onTap: () async => await canLaunch(_resetPassword) ? await launch(_resetPassword) : print('failed launching url'),
-                  child: Text('Recuperar contraseña', style: TextStyle(color: ThemeManager.getPrimaryColor()),),
+                  child: Container(
+                    width: double.infinity,
+                    color: Colors.transparent,
+                    height: 30,
+                    child: Center(
+                      child: Text('Recuperar contraseña', style: TextStyle(color: ThemeManager.getPrimaryColor()))
+                    )
+                  ),
                 ),
-                SizedBox(height: 15.0),
+                SizedBox(height: 5.0),
                 GestureDetector(
                   onTap: () async => await canLaunch(_requirementsUrl) ? await launch(_requirementsUrl) : print('failed launching url'),
-                  child: Text('Formulario para asociarse', style: TextStyle(color: ThemeManager.getPrimaryColor()),),
+                  child: Container(
+                    width: double.infinity,
+                    color: Colors.transparent,
+                    padding: EdgeInsets.zero,
+                    height: 20,
+                    child: Center(
+                      child: Text('Formulario para asociarse', style: TextStyle(color: ThemeManager.getPrimaryColor()))
+                    )
+                  ),
                 ),
                 GestureDetector(
                   onTap: () async => await canLaunch(_privacyPolicyUrl) ? await launch(_privacyPolicyUrl) : print('failed launching url'),
-                  child: Text('Políticas de privacidad', style: TextStyle(color: ThemeManager.getPrimaryColor())),
+                  child: Container(
+                    width: double.infinity,
+                    color: Colors.transparent,
+                    height: 20,
+                    child: Center(
+                      child: Text('Políticas de privacidad', style: TextStyle(color: ThemeManager.getPrimaryColor()))
+                    )
+                  ),
+                  // child: Text('Políticas de privacidad', style: TextStyle(color: ThemeManager.getPrimaryColor())),
                 ),
-                SizedBox(height: 20.0),
+                SizedBox(height: 10.0),
                 SocialMedia(),
                 Text('Derechos reservados ASOPEDIA - 2021', style: TextStyle(color: ThemeManager.getPrimaryColor()))
               ],

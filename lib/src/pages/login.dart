@@ -57,7 +57,7 @@ class _LoginContainer extends StatelessWidget {
     return Container(
       child: LoginForm(),
       width: double.infinity,
-      height: screenHeight * 0.75,
+      height: screenHeight * 0.85,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.only(topLeft: Radius.circular(80.0)),
         color: Colors.white
